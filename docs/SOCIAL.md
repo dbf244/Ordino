@@ -27,3 +27,40 @@ beta and 1.0. Show HN, Product Hunt, AlternativeTo and awesome lists at 1.0.
 ---
 
 ## Published posts
+
+### Achievement 0 — Foundations (v0.0.1)
+
+Suggested media: a screenshot of the menu bar with the Ordino icon open,
+showing "Quit Ordino", next to the green CI run on GitHub Actions.
+
+**X (English)**
+
+> I'm building Ordino, a free, open-source Mac app that tidies your folders with simple rules. A friendly Hazel alternative, built in public.
+>
+> Day 0: an empty, sandboxed menu bar app and green CI.
+>
+> https://github.com/dbf244/Ordino
+>
+> #buildinpublic #macOS #SwiftUI #opensource
+
+Thread:
+
+1. How it's set up: all the logic lives in a Swift package with no UI, the Xcode project is generated with XcodeGen, and Swift 6 strict concurrency is on from the first line. Any warning fails the build.
+2. Safety rules come before features. Ordino will never delete a file permanently (Trash only), never overwrite one silently, and every action will be undoable. The App Sandbox is on from day one, and CI checks it on every push.
+3. Next up: the Watcher. Pick a folder once, and Ordino sees every file that lands there, waiting until downloads finish before touching anything.
+
+**X (Spanish)**
+
+> Estoy creando Ordino, una app gratis y open source para Mac que ordena tus carpetas con reglas sencillas. Alternativa a Hazel, hecha en público.
+>
+> Día 0: app vacía en la barra de menús, sandbox y CI en verde.
+>
+> https://github.com/dbf244/Ordino
+>
+> #buildinpublic #macOS #SwiftUI #opensource
+
+Hilo:
+
+1. Cómo está montado: toda la lógica vive en un paquete Swift sin UI, el proyecto de Xcode se genera con XcodeGen y la concurrencia estricta de Swift 6 está activa desde la primera línea. Cualquier warning rompe la build.
+2. La seguridad va antes que las funciones. Ordino nunca borrará un archivo para siempre (solo a la Papelera), nunca sobrescribirá nada sin avisar y todo se podrá deshacer. El sandbox está activo desde el día 0 y el CI lo comprueba en cada push.
+3. Lo siguiente: el Watcher. Eliges una carpeta una vez y Ordino ve cada archivo que llega, esperando a que terminen las descargas antes de tocar nada.
