@@ -65,6 +65,7 @@ xcodebuild test -project Ordino.xcodeproj -scheme Ordino -destination 'platform=
 ```
 App/              SwiftUI app (menu bar, windows)
 AppTests/         App-level tests
+AppUITests/       UI tests that drive the real app
 Packages/Core/    OrdinoCore: all the logic, no UI
 docs/             Product spec, roadmap, design, entitlements
 project.yml       XcodeGen project definition

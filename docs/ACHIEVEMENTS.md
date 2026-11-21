@@ -4,11 +4,11 @@ Ordino is built one achievement at a time. Each one leaves the app in a working
 state that can be shown publicly. An achievement is done only when **every**
 acceptance criterion passes AND the maintainer confirms the manual checks.
 
-Status: **Current achievement → 0**
+Status: **Current achievement → 1**
 
 ---
 
-## 🏗️ Achievement 0 — Foundations (v0.0.1)
+## 🏗️ Achievement 0 — Foundations (v0.0.1) ✅
 An empty app runs in the menu bar and the repo is ready for the world.
 
 **Deliverables:** README, LICENSE (MIT), CONTRIBUTING.md, CODE_OF_CONDUCT.md,
@@ -16,11 +16,11 @@ An empty app runs in the menu bar and the repo is ready for the world.
 empty `Packages/Core` Swift package, App Sandbox enabled from day one,
 GitHub Actions CI (build + tests on macOS).
 
-- [ ] `xcodegen generate` creates the project and it builds with zero warnings.
-- [ ] Running the app shows a menu bar icon with a "Quit" item and no Dock icon.
-- [ ] The app is sandboxed (check with `codesign -d --entitlements - <app>`).
-- [ ] `swift test` in Core passes (one sample test).
-- [ ] CI is green on GitHub.
+- [x] `xcodegen generate` creates the project and it builds with zero warnings.
+- [x] Running the app shows a menu bar icon with a "Quit" item and no Dock icon.
+- [x] The app is sandboxed (check with `codesign -d --entitlements - <app>`).
+- [x] `swift test` in Core passes (one sample test).
+- [x] CI is green on GitHub.
 
 ## 👀 Achievement 1 — The Watcher (v0.1.0)
 The app sees what happens in a folder the user picked.
