@@ -66,15 +66,30 @@ targets:
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Ordino.app/Contents/MacOS/Ordino"
         BUNDLE_LOADER: "$(TEST_HOST)"
 
+  OrdinoUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources:
+      - path: AppUITests
+    dependencies:
+      - target: Ordino
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.dbf244.OrdinoUITests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: Ordino
+
 schemes:
   Ordino:
     build:
       targets:
         Ordino: all
         OrdinoTests: [test]
+        OrdinoUITests: [test]
     test:
       targets:
         - OrdinoTests
+        - OrdinoUITests
       gatherCoverageData: false
     run:
       config: Debug
