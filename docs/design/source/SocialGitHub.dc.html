@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ordino GitHub social preview</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#167A6C}a:hover{color:#0F5E53}
+</style>
+</helmet>
+<div style="width: 1280px; height: 640px; box-sizing: border-box; padding: 80px; background: #F4F7F6; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif; color: #1C1D1F; display: flex; align-items: center; gap: 64px; overflow: hidden">
+  <div style="width: 560px; flex-shrink: 0; display: flex; flex-direction: column; gap: 22px">
+    <div style="display: flex; align-items: center; gap: 18px">
+      <svg width="88" height="88" viewBox="0 0 1024 1024" aria-hidden="true"><rect x="40" y="40" width="944" height="944" rx="212" fill="#167A6C"/><g fill="#FFFFFF"><rect x="232" y="232" width="150" height="150" rx="36"/><rect x="437" y="232" width="150" height="150" rx="36"/><rect x="642" y="232" width="150" height="150" rx="36"/><rect x="232" y="437" width="150" height="150" rx="36"/><rect x="437" y="437" width="150" height="150" rx="36"/><rect x="642" y="437" width="150" height="150" rx="36"/><rect x="232" y="642" width="150" height="150" rx="36"/><rect x="437" y="642" width="150" height="150" rx="36"/></g><rect x="700" y="700" width="150" height="150" rx="36" fill="#A8EBDD"/></svg>
+      <span style="font-size: 72px; font-weight: 700; letter-spacing: -0.03em">Ordino</span>
+    </div>
+    <p style="margin: 0; font-size: 40px; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em">Your folders, in order.</p>
+    <p style="margin: 0; font-size: 22px; line-height: 1.45; color: #4A4E52">Simple rules that tidy your Mac’s folders. Simulate first, undo anything.</p>
+    <div style="display: flex; gap: 10px">
+      <span style="padding: 8px 16px; border-radius: 999px; background: #E3F1EE; color: #0F5E53; font-size: 17px; font-weight: 600">Free</span>
+      <span style="padding: 8px 16px; border-radius: 999px; background: #E3F1EE; color: #0F5E53; font-size: 17px; font-weight: 600">Open source</span>
+      <span style="padding: 8px 16px; border-radius: 999px; background: #E3F1EE; color: #0F5E53; font-size: 17px; font-weight: 600">Native macOS</span>
+    </div>
+  </div>
+  <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 14px">
+    <div style="box-sizing: border-box; padding: 22px 24px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DADDDC; box-shadow: 0 18px 40px rgba(0,0,0,0.10); display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 15px; color: #5F6368">When a file in <b style="color: #1C1D1F">Downloads</b> matches all of these</span>
+      <span style="align-self: flex-start; padding: 6px 12px; border-radius: 8px; background: #F4F5F4; font-size: 16px">Extension is <b>pdf</b></span>
+      <span style="align-self: flex-start; padding: 6px 12px; border-radius: 8px; background: #F4F5F4; font-size: 16px">Name contains <b>invoice</b></span>
+      <span style="font-size: 15px; color: #5F6368">then</span>
+      <span style="align-self: flex-start; padding: 6px 12px; border-radius: 8px; background: #E3F1EE; color: #0F5E53; font-size: 16px; font-weight: 600">Move to Documents/Invoices/2026</span>
+    </div>
+    <div style="box-sizing: border-box; padding: 14px 20px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DADDDC; display: flex; align-items: center; gap: 12px">
+      <span style="width: 8px; height: 8px; border-radius: 4px; background: #167A6C"></span>
+      <span style="font-size: 15px; font-weight: 600">invoice-march.pdf</span>
+      <span style="flex-grow: 1; font-size: 15px; color: #5F6368">moved · just now</span>
+      <span style="font-size: 15px; font-weight: 600; color: #167A6C">Undo</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":640}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

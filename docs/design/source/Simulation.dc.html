@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ordino rule simulation</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#167A6C}a:hover{color:#0F5E53}
+</style>
+</helmet>
+<div style="width: 1100px; height: 720px; box-sizing: border-box; padding: 24px; background: #E9ECEB; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; color: #1C1D1F">
+  <div style="width: 1052px; height: 672px; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #D5D8D7; box-shadow: 0 20px 50px rgba(0,0,0,0.18)">
+    <div style="height: 48px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 18px; border-bottom: 1px solid #E3E5E4; background: #F4F5F4">
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #FF5F57"></span>
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #FEBC2E"></span>
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #28C840"></span>
+      <span style="flex-grow: 1; text-align: center; font-size: 13px; font-weight: 600; color: #5F6368">Simulation · Images by month</span>
+      <span style="width: 52px"></span>
+    </div>
+    <div style="flex-grow: 1; box-sizing: border-box; padding: 28px 36px; display: flex; flex-direction: column; gap: 20px; min-height: 0">
+      <div style="display: flex; align-items: flex-end; gap: 16px">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.01em">This rule would affect 12 files</h1>
+          <p style="margin: 0; font-size: 14px; color: #5F6368">Nothing has changed yet. Review what would happen, then enable the rule.</p>
+        </div>
+        <div style="display: flex; gap: 8px">
+          <span style="padding: 6px 12px; border-radius: 999px; background: #E3F1EE; color: #0F5E53; font-size: 13px; font-weight: 600">11 will move</span>
+          <span style="padding: 6px 12px; border-radius: 999px; background: #FBF0DF; color: #8A4E00; font-size: 13px; font-weight: 600">1 skipped</span>
+        </div>
+      </div>
+      <div style="flex-grow: 1; border-radius: 12px; border: 1px solid #E3E5E4; overflow: hidden; display: flex; flex-direction: column">
+        <div style="display: flex; align-items: center; gap: 16px; height: 36px; padding: 0 16px; background: #F6F7F6; border-bottom: 1px solid #E3E5E4; font-size: 12px; font-weight: 600; color: #5F6368">
+          <span style="width: 300px">File</span><span style="width: 24px"></span><span style="flex-grow: 1">Result</span><span style="width: 110px">Action</span>
+        </div>
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="7">
+          <div style="display: flex; align-items: center; gap: 16px; height: 46px; padding: 0 16px; border-bottom: 1px solid #EEF0EF">
+            <span style="width: 300px; font-size: 14px; font-weight: 500">{{ r.name }}</span>
+            <span style="width: 24px; color: #5F6368">→</span>
+            <span style="flex-grow: 1; font-size: 13px; color: #5F6368; font-family: ui-monospace, Menlo, monospace">{{ r.to }}</span>
+            <span style="width: 110px"><span style="padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: {{ r.bg }}; color: {{ r.fg }}">{{ r.action }}</span></span>
+          </div>
+        </sc-for>
+        <div style="padding: 12px 16px; font-size: 13px; color: #5F6368">+ 5 more files moving to Pictures/Downloads/2026-11</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px">
+        <span style="flex-grow: 1; font-size: 13px; color: #5F6368">Skipped files are checked again when they finish downloading.</span>
+        <a href="RuleEditor.dc.html" style="height: 32px; padding: 0 14px; border-radius: 6px; border: 1px solid #D5D8D7; color: #1C1D1F; font: 500 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; text-decoration: none; display: flex; align-items: center">Back to editor</a>
+        <a href="Window.dc.html" style="height: 32px; padding: 0 16px; border-radius: 6px; background: #167A6C; color: #FFFFFF; font: 600 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; text-decoration: none; display: flex; align-items: center">Enable rule</a>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1100,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+const move = { action: 'Move', bg: '#E3F1EE', fg: '#0F5E53' };
+const skip = { action: 'Skipped', bg: '#FBF0DF', fg: '#8A4E00' };
+const rows = [
+{ name: 'IMG_2041.heic', to: 'Pictures/Downloads/2026-11/', ...move },
+{ name: 'beach-sunset.jpg', to: 'Pictures/Downloads/2026-08/', ...move },
+{ name: 'logo-final-v3.png', to: 'Pictures/Downloads/2026-10/', ...move },
+{ name: 'scan-passport-page.png', to: 'Pictures/Downloads/2026-09/', ...move },
+{ name: 'IMG_2041.heic (copy)', to: 'Pictures/Downloads/2026-11/IMG_2041 2.heic', action: 'Move + rename', bg: '#E7EEFB', fg: '#2B55A1' },
+{ name: 'wallpaper-4k.jpg.crdownload', to: 'Still downloading', ...skip }
+];
+return { rows };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ordino history</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#167A6C}a:hover{color:#0F5E53}
+</style>
+</helmet>
+<div style="width: 1100px; height: 720px; box-sizing: border-box; padding: 24px; background: #E9ECEB; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; color: #1C1D1F">
+  <div style="width: 1052px; height: 672px; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #D5D8D7; box-shadow: 0 20px 50px rgba(0,0,0,0.18)">
+    <div style="height: 48px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 18px; border-bottom: 1px solid #E3E5E4; background: #F4F5F4">
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #FF5F57"></span>
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #FEBC2E"></span>
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #28C840"></span>
+      <span style="flex-grow: 1; text-align: center; font-size: 13px; font-weight: 600; color: #5F6368">History</span>
+      <span style="width: 52px"></span>
+    </div>
+    <div style="flex-grow: 1; box-sizing: border-box; padding: 24px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 0">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <h1 style="margin: 0; flex-grow: 1; font-size: 28px; font-weight: 700; letter-spacing: -0.01em">Everything Ordino did</h1>
+        <label for="history-search" style="position: absolute; left: -9999px">Search history</label>
+        <input id="history-search" placeholder="Search files or rules" style="width: 260px; height: 32px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid #D5D8D7; background: #F6F7F6; font: 400 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">
+      </div>
+      <div style="display: flex; gap: 4px; padding: 3px; border-radius: 8px; background: #EEF0EF; align-self: flex-start">
+        <button aria-pressed="true" style="height: 26px; padding: 0 14px; border: 0; border-radius: 6px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.12); font: 600 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">All</button>
+        <button aria-pressed="false" style="height: 26px; padding: 0 14px; border: 0; border-radius: 6px; background: transparent; font: 500 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #3A3D40">Moved</button>
+        <button aria-pressed="false" style="height: 26px; padding: 0 14px; border: 0; border-radius: 6px; background: transparent; font: 500 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #3A3D40">Renamed</button>
+        <button aria-pressed="false" style="height: 26px; padding: 0 14px; border: 0; border-radius: 6px; background: transparent; font: 500 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #3A3D40">Trashed</button>
+      </div>
+      <sc-for list="{{ days }}" as="d" hint-placeholder-count="2">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <p style="margin: 6px 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5F6368">{{ d.label }}</p>
+          <sc-for list="{{ d.items }}" as="i" hint-placeholder-count="3">
+            <div style="display: flex; align-items: center; gap: 14px; height: 48px; padding: 0 12px; border-radius: 8px; background: #F6F7F6; opacity: {{ i.op }}">
+              <span style="width: 44px; font-size: 12px; color: #5F6368; font-variant-numeric: tabular-nums">{{ i.time }}</span>
+              <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                <span style="font-size: 14px; font-weight: 600">{{ i.file }}</span>
+                <span style="font-size: 12px; color: #5F6368">{{ i.what }} · rule “{{ i.rule }}”</span>
+              </div>
+              <button style="height: 28px; padding: 0 12px; border-radius: 6px; border: 1px solid {{ i.border }}; background: transparent; color: {{ i.fg }}; font: 600 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif">{{ i.button }}</button>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1100,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+const live = { button: 'Undo', fg: '#167A6C', border: '#B9DCD5', op: 1 };
+const done = { button: 'Redo', fg: '#5F6368', border: '#D5D8D7', op: 0.6 };
+return {
+days: [
+{ label: 'Today', items: [
+{ time: '12:04', file: 'IMG_2041.heic', what: 'Moved to Pictures/Downloads/2026-11', rule: 'Images by month', ...live },
+{ time: '09:41', file: 'invoice-march.pdf', what: 'Moved to Documents/Invoices/2026 and tagged Green', rule: 'Invoices to Documents', ...live },
+{ time: '09:12', file: 'Screenshot 2026-11-21 at 09.12.png', what: 'Undone · back in Desktop', rule: 'Screenshots by month', ...done }
+] },
+{ label: 'Yesterday', items: [
+{ time: '18:30', file: 'Zoom-installer.dmg', what: 'Moved to Trash', rule: 'Old installers to Trash', ...live },
+{ time: '18:30', file: 'Figma-agent.pkg', what: 'Moved to Trash', rule: 'Old installers to Trash', ...live }
+] }
+]
+};
+}
+}
+</script>
+</body>
+</html>

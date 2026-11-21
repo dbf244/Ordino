@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ordino X header</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#167A6C}a:hover{color:#0F5E53}
+</style>
+</helmet>
+<div style="width: 1500px; height: 500px; position: relative; overflow: hidden; background: #167A6C; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif; color: #FFFFFF">
+  <div aria-hidden="true" style="position: absolute; right: 80px; top: 70px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px">
+    <span style="width: 96px; height: 96px; border-radius: 24px; background: #FFFFFF; opacity: 0.95"></span>
+    <span style="width: 96px; height: 96px; border-radius: 24px; background: #FFFFFF; opacity: 0.95"></span>
+    <span style="width: 96px; height: 96px; border-radius: 24px; background: #FFFFFF; opacity: 0.95"></span>
+    <span style="width: 96px; height: 96px; border-radius: 24px; background: #FFFFFF; opacity: 0.95"></span>
+    <span style="width: 96px; height: 96px; border-radius: 24px; background: #FFFFFF; opacity: 0.95"></span>
+    <span style="width: 96px; height: 96px; border-radius: 24px; background: #FFFFFF; opacity: 0.95"></span>
+    <span style="width: 96px; height: 96px; border-radius: 24px; background: #FFFFFF; opacity: 0.95"></span>
+    <span style="width: 96px; height: 96px; border-radius: 24px; background: #FFFFFF; opacity: 0.95"></span>
+    <span style="width: 96px; height: 96px; border-radius: 24px; border: 4px dashed rgba(255,255,255,0.5); box-sizing: border-box"></span>
+  </div>
+  <span aria-hidden="true" style="position: absolute; right: 52px; top: 330px; width: 96px; height: 96px; border-radius: 24px; background: #A8EBDD"></span>
+  <div style="position: absolute; left: 420px; top: 140px; width: 620px; display: flex; flex-direction: column; gap: 18px">
+    <p style="margin: 0; font-size: 64px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05">Your folders, in order.</p>
+    <p style="margin: 0; font-size: 24px; line-height: 1.4; color: #DDF2EE">A free, open-source Mac app that tidies your files with simple rules. Built in public.</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1500,"height":500}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

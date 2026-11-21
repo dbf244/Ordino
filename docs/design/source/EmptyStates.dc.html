@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ordino empty and error states</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#167A6C}a:hover{color:#0F5E53}
+</style>
+</helmet>
+<div style="width: 1100px; height: 540px; box-sizing: border-box; padding: 40px; background: #E9ECEB; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; color: #1C1D1F; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+  <div style="box-sizing: border-box; padding: 36px 28px; border-radius: 16px; background: #FFFFFF; border: 1px solid #D5D8D7; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px">
+    <svg width="96" height="96" viewBox="0 0 1024 1024" aria-hidden="true"><g fill="none" stroke="#B9C0BE" stroke-width="18" stroke-dasharray="40 30"><rect x="232" y="232" width="150" height="150" rx="36"/><rect x="437" y="232" width="150" height="150" rx="36"/><rect x="642" y="232" width="150" height="150" rx="36"/><rect x="232" y="437" width="150" height="150" rx="36"/><rect x="437" y="437" width="150" height="150" rx="36"/><rect x="642" y="437" width="150" height="150" rx="36"/><rect x="232" y="642" width="150" height="150" rx="36"/><rect x="437" y="642" width="150" height="150" rx="36"/></g><rect x="642" y="642" width="150" height="150" rx="36" fill="#A8EBDD"/></svg>
+    <h2 style="margin: 0; font-size: 20px; font-weight: 700">No folders yet</h2>
+    <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5F6368">Pick a folder you’d like to keep tidy. Downloads is a great place to start.</p>
+    <div style="flex-grow: 1"></div>
+    <a href="Onboarding.dc.html" style="height: 36px; padding: 0 18px; border-radius: 8px; background: #167A6C; color: #FFFFFF; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; text-decoration: none; display: flex; align-items: center">Add a folder</a>
+  </div>
+  <div style="box-sizing: border-box; padding: 36px 28px; border-radius: 16px; background: #FFFFFF; border: 1px solid #D5D8D7; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px">
+    <span style="width: 72px; height: 72px; margin: 12px 0; border-radius: 36px; background: #FBF0DF; color: #8A4E00; display: flex; align-items: center; justify-content: center">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    </span>
+    <h2 style="margin: 0; font-size: 20px; font-weight: 700">Ordino needs access to Desktop</h2>
+    <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5F6368">macOS asks you to confirm each folder Ordino can touch. Your 2 Desktop rules are paused until you allow it.</p>
+    <div style="flex-grow: 1"></div>
+    <button style="height: 36px; padding: 0 18px; border-radius: 8px; border: 0; background: #167A6C; color: #FFFFFF; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif">Allow access…</button>
+  </div>
+  <div style="box-sizing: border-box; padding: 36px 28px; border-radius: 16px; background: #FFFFFF; border: 1px solid #D5D8D7; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px">
+    <span style="width: 72px; height: 72px; margin: 12px 0; border-radius: 36px; background: #FBEAE8; color: #B03325; display: flex; align-items: center; justify-content: center">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+    </span>
+    <h2 style="margin: 0; font-size: 20px; font-weight: 700">Two rules were going in circles</h2>
+    <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5F6368">“report.pdf” kept moving between Downloads and Desktop. Ordino paused both rules and left the file where it was.</p>
+    <div style="flex-grow: 1"></div>
+    <a href="Window.dc.html" style="height: 36px; padding: 0 18px; border-radius: 8px; border: 1px solid #D5D8D7; color: #1C1D1F; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; text-decoration: none; display: flex; align-items: center">Review rules</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1100,"height":540}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

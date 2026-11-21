@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ordino menu bar panel</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 360px; height: 540px; box-sizing: border-box; background: {{ t.canvas }}; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; color: {{ t.text }}; display: flex; flex-direction: column">
+  <div style="height: 28px; flex-shrink: 0; display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 0 14px; background: {{ t.bar }}; color: {{ t.text }}; font-size: 13px">
+    <span style="width: 26px; height: 22px; border-radius: 5px; background: {{ t.barSel }}; display: flex; align-items: center; justify-content: center">
+      <svg width="15" height="15" viewBox="0 0 18 18" fill="currentColor" role="img" aria-label="Ordino menu bar icon"><rect x="0.75" y="0.75" width="4.5" height="4.5" rx="1.2"/><rect x="6.75" y="0.75" width="4.5" height="4.5" rx="1.2"/><rect x="12.75" y="0.75" width="4.5" height="4.5" rx="1.2"/><rect x="0.75" y="6.75" width="4.5" height="4.5" rx="1.2"/><rect x="6.75" y="6.75" width="4.5" height="4.5" rx="1.2"/><rect x="12.75" y="6.75" width="4.5" height="4.5" rx="1.2"/><rect x="0.75" y="12.75" width="4.5" height="4.5" rx="1.2"/><rect x="6.75" y="12.75" width="4.5" height="4.5" rx="1.2"/><rect x="13.25" y="13.25" width="3.5" height="3.5" rx="1" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+    </span>
+    <span style="font-weight: 500">Sat 21 Nov 12:30</span>
+  </div>
+  <div style="margin: 8px 12px 12px; flex-grow: 1; box-sizing: border-box; padding: 16px; border-radius: 14px; background: {{ t.panel }}; border: 1px solid {{ t.border }}; box-shadow: 0 16px 40px rgba(0,0,0,0.22); display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="28" height="28" viewBox="0 0 1024 1024" aria-hidden="true"><rect x="40" y="40" width="944" height="944" rx="212" fill="#167A6C"/><g fill="#FFFFFF"><rect x="232" y="232" width="150" height="150" rx="36"/><rect x="437" y="232" width="150" height="150" rx="36"/><rect x="642" y="232" width="150" height="150" rx="36"/><rect x="232" y="437" width="150" height="150" rx="36"/><rect x="437" y="437" width="150" height="150" rx="36"/><rect x="642" y="437" width="150" height="150" rx="36"/><rect x="232" y="642" width="150" height="150" rx="36"/><rect x="437" y="642" width="150" height="150" rx="36"/></g><rect x="700" y="700" width="150" height="150" rx="36" fill="#A8EBDD"/></svg>
+      <span style="flex-grow: 1; font-size: 15px; font-weight: 700">Ordino</span>
+      <span style="padding: 3px 10px; border-radius: 999px; background: {{ t.tint }}; color: {{ t.tintText }}; font-size: 12px; font-weight: 600">● Active</span>
+    </div>
+    <div style="display: flex; gap: 10px">
+      <div style="flex: 1; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; background: {{ t.soft }}; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 20px; font-weight: 700">14</span>
+        <span style="font-size: 12px; color: {{ t.muted }}">files tidied today</span>
+      </div>
+      <div style="flex: 1; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; background: {{ t.soft }}; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 20px; font-weight: 700">4</span>
+        <span style="font-size: 12px; color: {{ t.muted }}">folders watched</span>
+      </div>
+    </div>
+    <p style="margin: 2px 0 0; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{ t.muted }}">Recent</p>
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <sc-for list="{{ recent }}" as="r" hint-placeholder-count="5">
+        <div style="display: flex; align-items: center; gap: 8px; height: 40px">
+          <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
+            <span style="font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ r.file }}</span>
+            <span style="font-size: 11.5px; color: {{ t.muted }}">{{ r.what }}</span>
+          </div>
+          <button style="height: 26px; padding: 0 8px; border: 0; border-radius: 6px; background: transparent; color: {{ t.accent }}; font: 600 12px -apple-system, BlinkMacSystemFont, Inter, sans-serif">Undo</button>
+        </div>
+      </sc-for>
+    </div>
+    <div style="flex-grow: 1"></div>
+    <button style="height: 36px; border-radius: 8px; border: 1px solid {{ t.border }}; background: transparent; color: {{ t.text }}; font: 600 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>
+      Pause all rules
+    </button>
+    <div style="display: flex; gap: 8px">
+      <a href="Window.dc.html" style="flex: 1; height: 34px; border-radius: 8px; background: {{ t.accent }}; color: {{ t.accentText }}; font: 600 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; text-decoration: none; display: flex; align-items: center; justify-content: center">Open Ordino</a>
+      <button aria-label="Settings" style="width: 34px; height: 34px; border-radius: 8px; border: 1px solid {{ t.border }}; background: transparent; color: {{ t.text }}; display: flex; align-items: center; justify-content: center; padding: 0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":360,"height":540}}'>
+class Component extends DCLogic {
+renderVals() {
+const dark = this.props.dark ?? false;
+const t = dark
+? { canvas: '#1A2A3A', bar: 'rgba(30,31,33,0.85)', barSel: 'rgba(255,255,255,0.18)', panel: '#232426', border: '#3A3C3F', text: '#F2F3F4', muted: '#A9ADB2', soft: '#2C2E31', tint: '#1F3A35', tintText: '#7FD8C7', accent: '#4FC2AE', accentText: '#0E2F2A' }
+: { canvas: '#BFD3E0', bar: 'rgba(246,247,246,0.85)', barSel: 'rgba(0,0,0,0.12)', panel: '#FFFFFF', border: '#DADDDC', text: '#1C1D1F', muted: '#5F6368', soft: '#F4F5F4', tint: '#E3F1EE', tintText: '#0F5E53', accent: '#167A6C', accentText: '#FFFFFF' };
+const recent = [
+{ file: 'IMG_2041.heic', what: 'Moved to Pictures · 5 min ago' },
+{ file: 'invoice-march.pdf', what: 'Moved to Invoices · 2 h ago' },
+{ file: 'Screenshot 2026-11-21 at 09.12.png', what: 'Moved to Screenshots · 3 h ago' },
+{ file: 'Zoom-installer.dmg', what: 'Moved to Trash · yesterday' },
+{ file: 'notes.txt', what: 'Renamed to 2026-11-20 notes.txt · yesterday' }
+];
+return { t, recent };
+}
+}
+</script>
+</body>
+</html>

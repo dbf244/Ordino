@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ordino templates</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#167A6C}a:hover{color:#0F5E53}
+</style>
+</helmet>
+<div style="width: 1100px; height: 720px; box-sizing: border-box; padding: 24px; background: #E9ECEB; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; color: #1C1D1F">
+  <div style="width: 1052px; height: 672px; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #D5D8D7; box-shadow: 0 20px 50px rgba(0,0,0,0.18)">
+    <div style="height: 48px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 18px; border-bottom: 1px solid #E3E5E4; background: #F4F5F4">
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #FF5F57"></span>
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #FEBC2E"></span>
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #28C840"></span>
+      <span style="flex-grow: 1; text-align: center; font-size: 13px; font-weight: 600; color: #5F6368">New rule</span>
+      <span style="width: 52px"></span>
+    </div>
+    <div style="flex-grow: 1; box-sizing: border-box; padding: 28px 36px; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.01em">Start from a template</h1>
+        <p style="margin: 0; font-size: 14px; color: #5F6368">Every template opens in the editor and runs a simulation first. Nothing moves until you say so.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <sc-for list="{{ templates }}" as="tp" hint-placeholder-count="5">
+          <div style="box-sizing: border-box; height: 230px; padding: 20px; border-radius: 14px; border: 1px solid #E3E5E4; background: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+            <span style="width: 40px; height: 40px; border-radius: 10px; background: #E3F1EE; color: #167A6C; display: flex; align-items: center; justify-content: center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ tp.icon }}"/></svg>
+            </span>
+            <span style="font-size: 16px; font-weight: 600">{{ tp.title }}</span>
+            <span style="font-size: 13px; line-height: 1.45; color: #5F6368; flex-grow: 1">{{ tp.desc }}</span>
+            <div style="display: flex; align-items: center">
+              <span style="flex-grow: 1; font-size: 12px; color: #5F6368">{{ tp.folder }}</span>
+              <a href="RuleEditor.dc.html" style="font-size: 13px; font-weight: 600; color: #167A6C; text-decoration: none">Use template</a>
+            </div>
+          </div>
+        </sc-for>
+        <a href="RuleEditor.dc.html" style="box-sizing: border-box; height: 230px; padding: 20px; border-radius: 14px; border: 1.5px dashed #B9C0BE; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-decoration: none; color: #3A3D40">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <span style="font-size: 15px; font-weight: 600">Start from scratch</span>
+          <span style="font-size: 13px; color: #5F6368">Build your own rule</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1100,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+templates: [
+{ title: 'Sort Downloads by type', desc: 'Images, documents, videos, archives and installers each go to their own folder.', folder: 'Downloads', icon: 'M4 6h16M4 12h10M4 18h6' },
+{ title: 'Clean old installers', desc: '.dmg and .pkg files older than 7 days go to the Trash. You can always undo.', folder: 'Downloads', icon: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13' },
+{ title: 'Screenshots by month', desc: 'Screenshots leave your Desktop and land in a folder for each month.', folder: 'Desktop', icon: 'M4 7h3l2-2h6l2 2h3v12H4zM12 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6' },
+{ title: 'Archive invoices', desc: 'PDFs with “invoice” or “factura” in the name move to Documents/Invoices/{year}.', folder: 'Downloads', icon: 'M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6' },
+{ title: 'Tidy Desktop nightly', desc: 'Anything left on the Desktop for 3 days moves to a dated folder in Documents.', folder: 'Desktop', icon: 'M20 15a8 8 0 1 1-11-11 6 6 0 0 0 11 11' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

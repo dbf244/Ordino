@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ordino rule editor</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#167A6C}a:hover{color:#0F5E53}
+</style>
+</helmet>
+<div style="width: 1100px; height: 720px; box-sizing: border-box; padding: 24px; background: #E9ECEB; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; color: #1C1D1F">
+  <div style="width: 1052px; height: 672px; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #D5D8D7; box-shadow: 0 20px 50px rgba(0,0,0,0.18)">
+    <div style="height: 48px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 18px; border-bottom: 1px solid #E3E5E4; background: #F4F5F4">
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #FF5F57"></span>
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #FEBC2E"></span>
+      <span style="width: 12px; height: 12px; border-radius: 6px; background: #28C840"></span>
+      <span style="flex-grow: 1; text-align: center; font-size: 13px; font-weight: 600; color: #5F6368">Edit rule · Downloads</span>
+      <span style="width: 52px"></span>
+    </div>
+    <div style="flex-grow: 1; display: flex; min-height: 0">
+      <div style="flex-grow: 1; box-sizing: border-box; padding: 28px 36px; display: flex; flex-direction: column; gap: 22px; min-width: 0">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="rule-name" style="font-size: 12px; font-weight: 600; color: #5F6368">Rule name</label>
+          <input id="rule-name" value="Invoices to Documents" style="height: 38px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid #D5D8D7; font: 600 17px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <p style="margin: 0; font-size: 15px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap">When a file in
+            <button style="height: 28px; padding: 0 10px; border-radius: 6px; border: 1px solid #D5D8D7; background: #FFFFFF; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">Downloads ⌄</button>
+            matches
+            <button style="height: 28px; padding: 0 10px; border-radius: 6px; border: 1px solid #D5D8D7; background: #FFFFFF; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">all ⌄</button>
+            of these conditions</p>
+          <sc-for list="{{ conditions }}" as="c" hint-placeholder-count="2">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 10px; background: #F6F7F6">
+              <button style="width: 150px; height: 32px; text-align: left; padding: 0 10px; border-radius: 6px; border: 1px solid #D5D8D7; background: #FFFFFF; font: 500 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">{{ c.field }}</button>
+              <button style="width: 130px; height: 32px; text-align: left; padding: 0 10px; border-radius: 6px; border: 1px solid #D5D8D7; background: #FFFFFF; font: 500 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">{{ c.op }}</button>
+              <input aria-label="{{ c.label }}" value="{{ c.value }}" style="flex-grow: 1; height: 32px; box-sizing: border-box; padding: 0 10px; border-radius: 6px; border: 1px solid #D5D8D7; font: 400 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">
+              <button aria-label="Remove condition" style="width: 32px; height: 32px; border-radius: 6px; border: 0; background: transparent; color: #5F6368; font-size: 18px">−</button>
+            </div>
+          </sc-for>
+          <button style="align-self: flex-start; height: 30px; padding: 0 8px; border: 0; background: transparent; color: #167A6C; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif">+ Add condition</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <p style="margin: 0; font-size: 15px">Then do these actions, in order</p>
+          <sc-for list="{{ actions }}" as="a" hint-placeholder-count="2">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 10px; background: #F6F7F6">
+              <span style="width: 22px; height: 22px; border-radius: 11px; background: #E3F1EE; color: #0F5E53; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ a.n }}</span>
+              <button style="width: 170px; height: 32px; text-align: left; padding: 0 10px; border-radius: 6px; border: 1px solid #D5D8D7; background: #FFFFFF; font: 500 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #1C1D1F">{{ a.kind }}</button>
+              <input aria-label="{{ a.label }}" value="{{ a.value }}" style="flex-grow: 1; height: 32px; box-sizing: border-box; padding: 0 10px; border-radius: 6px; border: 1px solid #D5D8D7; font: 400 14px ui-monospace, Menlo, monospace; color: #1C1D1F">
+              <button aria-label="Remove action" style="width: 32px; height: 32px; border-radius: 6px; border: 0; background: transparent; color: #5F6368; font-size: 18px">−</button>
+            </div>
+          </sc-for>
+          <button style="align-self: flex-start; height: 30px; padding: 0 8px; border: 0; background: transparent; color: #167A6C; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif">+ Add action</button>
+        </div>
+        <div style="flex-grow: 1"></div>
+        <div style="display: flex; align-items: center; gap: 10px; padding-top: 16px; border-top: 1px solid #E3E5E4">
+          <span style="flex-grow: 1; font-size: 13px; color: #5F6368">Files are never deleted permanently. Every action can be undone.</span>
+          <button style="height: 32px; padding: 0 14px; border-radius: 6px; border: 1px solid #D5D8D7; background: #FFFFFF; color: #1C1D1F; font: 500 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif">Cancel</button>
+          <a href="Simulation.dc.html" style="height: 32px; padding: 0 14px; border-radius: 6px; background: #167A6C; color: #FFFFFF; font: 600 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; text-decoration: none; display: flex; align-items: center">Simulate &amp; save</a>
+        </div>
+      </div>
+      <aside style="width: 300px; flex-shrink: 0; box-sizing: border-box; padding: 28px 22px; background: #F6F7F6; border-left: 1px solid #E3E5E4; display: flex; flex-direction: column; gap: 14px">
+        <p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5F6368">Live preview</p>
+        <p style="margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.01em">3 files match now</p>
+        <sc-for list="{{ matches }}" as="m" hint-placeholder-count="3">
+          <div style="box-sizing: border-box; padding: 10px 12px; border-radius: 8px; background: #FFFFFF; border: 1px solid #E3E5E4; display: flex; flex-direction: column; gap: 3px">
+            <span style="font-size: 13px; font-weight: 600">{{ m.name }}</span>
+            <span style="font-size: 12px; color: #5F6368">→ {{ m.to }}</span>
+          </div>
+        </sc-for>
+        <div style="flex-grow: 1"></div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <button aria-label="Keep checking other rules" aria-pressed="false" style="width: 38px; height: 22px; flex-shrink: 0; border-radius: 11px; border: 0; padding: 0; position: relative; background: #C9CDCC"><span style="position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 9px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+          <span style="font-size: 13px">Keep checking other rules</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <button aria-label="Notify me" aria-pressed="true" style="width: 38px; height: 22px; flex-shrink: 0; border-radius: 11px; border: 0; padding: 0; position: relative; background: #167A6C"><span style="position: absolute; top: 2px; left: 18px; width: 18px; height: 18px; border-radius: 9px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+          <span style="font-size: 13px">Notify me when it runs</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1100,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+conditions: [
+{ field: 'Extension ⌄', op: 'is ⌄', value: 'pdf', label: 'Extension value' },
+{ field: 'Name ⌄', op: 'contains ⌄', value: 'invoice', label: 'Name value' }
+],
+actions: [
+{ n: '1', kind: 'Move to folder ⌄', value: '~/Documents/Invoices/{year}', label: 'Destination folder' },
+{ n: '2', kind: 'Add tag ⌄', value: 'Green', label: 'Tag name' }
+],
+matches: [
+{ name: 'invoice-march.pdf', to: 'Documents/Invoices/2026' },
+{ name: 'Invoice_0042_Acme.pdf', to: 'Documents/Invoices/2026' },
+{ name: 'invoice-2025-12.pdf', to: 'Documents/Invoices/2025' }
+]
+};
+}
+}
+</script>
+</body>
+</html>
