@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-23
+
+Achievement 3: All Conditions.
+
+### Added
+- Kind (image, video, audio, document, archive, installer, folder,
+  application, other), size (decimal units, like Finder; folders count
+  everything inside), dates (added, created, modified, last opened, more or
+  less than N hours/days/weeks/months/years ago), Finder tags, download
+  source (`kMDItemWhereFroms`, subdomains included) and screenshot
+  (`kMDItemIsScreenCapture`) conditions.
+- Nested ALL/ANY groups, as deep as needed.
+- Metadata is read from the file's own attributes (what Spotlight indexes),
+  so it works in the sandbox and without waiting for indexing.
+- Only the facts a rule set uses are read from disk.
+
+### Changed
+- The Evaluator takes "now" as a parameter, so evaluation is fully repeatable.
+  A fact that is unknown for a file never matches, not even a negative condition.
+- Regular expressions are compiled once and reused. 10,000 files are
+  evaluated against five template-like rules in about 0.1 s.
+
 ## [0.2.0] - 2026-11-23
 
 Achievement 2: The First Rule.
@@ -58,7 +80,8 @@ Achievement 0: Foundations.
 - GitHub Actions CI that builds the app and runs all tests on macOS, failing on any warning or a missing sandbox.
 - README, MIT license, contributing guide, code of conduct and this changelog.
 
-[Unreleased]: https://github.com/dbf244/Ordino/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/dbf244/Ordino/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/dbf244/Ordino/releases/tag/v0.3.0
 [0.2.0]: https://github.com/dbf244/Ordino/releases/tag/v0.2.0
 [0.1.0]: https://github.com/dbf244/Ordino/releases/tag/v0.1.0
 [0.0.1]: https://github.com/dbf244/Ordino/releases/tag/v0.0.1

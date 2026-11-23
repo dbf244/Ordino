@@ -4,7 +4,7 @@ Ordino is built one achievement at a time. Each one leaves the app in a working
 state that can be shown publicly. An achievement is done only when **every**
 acceptance criterion passes AND the maintainer confirms the manual checks.
 
-Status: **Current achievement → 3**
+Status: **Current achievement → 4**
 
 ---
 
@@ -47,15 +47,15 @@ one test rule defined in code.
 - [x] If the destination already has that name, the file becomes `test 2.pdf`; nothing is overwritten.
 - [x] Evaluator tests cover every name and extension case.
 
-## 🔍 Achievement 3 — All Conditions (v0.3.0)
+## 🔍 Achievement 3 — All Conditions (v0.3.0) ✅
 The engine understands everything v1.0 needs.
 
 **Deliverables:** kind, size, dates, Finder tags, download source and
 screenshot conditions; nested ALL/ANY groups.
 
-- [ ] Each condition has tests with real files (including Spotlight metadata).
-- [ ] Nested groups (AND inside OR) evaluate correctly in tests.
-- [ ] Evaluating 10,000 simulated files takes under 1 second.
+- [x] Each condition has tests with real files (including Spotlight metadata).
+- [x] Nested groups (AND inside OR) evaluate correctly in tests.
+- [x] Evaluating 10,000 simulated files takes under 1 second.
 
 ## ⚡ Achievement 4 — All Actions (v0.4.0)
 The app can do everything with a file.

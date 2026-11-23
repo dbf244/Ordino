@@ -24,7 +24,9 @@ and there's more power when you go looking for it.
 Ordino is being built in public, one achievement at a time.
 **Right now Ordino watches one folder you choose and runs a single built-in
 test rule: PDFs move to a destination folder you pick. Name conflicts become
-`name 2.pdf`; nothing is ever overwritten. A rule editor comes later.**
+`name 2.pdf`; nothing is ever overwritten. The engine already understands
+every v1.0 condition (name, extension, kind, size, dates, Finder tags,
+download source, screenshots, nested groups); a rule editor comes later.**
 See [docs/ACHIEVEMENTS.md](docs/ACHIEVEMENTS.md) for the roadmap and progress.
 
 ## Principles
