@@ -98,3 +98,37 @@ Hilo:
 1. Lo difícil no es ver los archivos, es saber cuándo han terminado. FSEvents avisa de que algo cambió; Ordino mide el archivo hasta que su tamaño y fecha dejan de moverse durante un segundo. Las descargas a medias (.crdownload, .download, .part) se ignoran.
 2. Números reales en mi Mac: archivo nuevo avisado 1,2 s después de escribirse, renombrados y borrados en 0,2 s, 0,00 s de CPU en un minuto en reposo. FSEvents solo despierta la app cuando pasa algo.
 3. Con sandbox desde el principio: Ordino solo ve la carpeta que eliges, recordada con un security-scoped bookmark. Las carpetas del sistema y ~/Library no se pueden elegir. Lo siguiente: la primera regla que mueve un archivo de verdad.
+
+### Achievement 2 — The First Rule (v0.2.0)
+
+Suggested media: a short screen recording: drag test.pdf into
+~/Ordino-Playground, it disappears and shows up in Destination; drag a second
+test.pdf and it appears as "test 2.pdf", with the Activity Log open beside it.
+
+**X (English)**
+
+> Ordino's first real rule works: drop test.pdf in a folder and it moves to the destination you picked. Drop another test.pdf and it becomes test 2.pdf. Nothing is ever overwritten.
+>
+> https://github.com/dbf244/Ordino
+>
+> #buildinpublic #macOS #SwiftUI #opensource
+
+Thread:
+
+1. The Evaluator is pure: same file facts in, same rules out. 107 tests cover every name and extension case, including accents (macOS stores "é" as e + accent, and both must match). An empty or half-written condition never matches anything.
+2. Small safety choices: a number you put in a name is never changed (Chapter 2.pdf becomes Chapter 2 2.pdf), and moving to another disk copies, checks the copy, then sends the original to the Trash instead of deleting it.
+3. Next: all the conditions v1.0 needs (kind, size, dates, tags, download source, screenshots) and nested ALL/ANY groups.
+
+**X (Spanish)**
+
+> La primera regla de Ordino ya funciona: sueltas test.pdf en una carpeta y se mueve al destino que elegiste. Sueltas otro test.pdf y se convierte en test 2.pdf. Nunca se sobrescribe nada.
+>
+> https://github.com/dbf244/Ordino
+>
+> #buildinpublic #macOS #SwiftUI #opensource
+
+Hilo:
+
+1. El Evaluator es puro: mismos datos del archivo, mismas reglas. 107 tests cubren cada caso de nombre y extensión, también acentos (macOS guarda "é" como e + tilde y ambas formas deben coincidir). Una condición vacía o a medias nunca coincide.
+2. Pequeñas decisiones de seguridad: un número que pusiste en el nombre nunca cambia (Capítulo 2.pdf pasa a Capítulo 2 2.pdf), y al mover a otro disco se copia, se comprueba la copia y el original va a la Papelera en vez de borrarse.
+3. Lo siguiente: todas las condiciones de la v1.0 (tipo, tamaño, fechas, etiquetas, origen de descarga, capturas) y grupos TODAS/ALGUNA anidados.
