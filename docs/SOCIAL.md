@@ -64,3 +64,37 @@ Hilo:
 1. Cómo está montado: toda la lógica vive en un paquete Swift sin UI, el proyecto de Xcode se genera con XcodeGen y la concurrencia estricta de Swift 6 está activa desde la primera línea. Cualquier warning rompe la build.
 2. La seguridad va antes que las funciones. Ordino nunca borrará un archivo para siempre (solo a la Papelera), nunca sobrescribirá nada sin avisar y todo se podrá deshacer. El sandbox está activo desde el día 0 y el CI lo comprueba en cada push.
 3. Lo siguiente: el Watcher. Eliges una carpeta una vez y Ordino ve cada archivo que llega, esperando a que terminen las descargas antes de tocar nada.
+
+### Achievement 1 — The Watcher (v0.1.0)
+
+Suggested media: a short screen recording of Finder dropping a file into
+~/Ordino-Playground while the Activity Log window shows it appear, then a
+rename and a delete.
+
+**X (English)**
+
+> Ordino now watches a folder. Pick it once and access survives relaunches. Files show up ~1 s after they stop changing; a 400 MB file written over 6 s was reported once, when done. Idle CPU: 0%.
+>
+> https://github.com/dbf244/Ordino
+>
+> #buildinpublic #macOS #SwiftUI #opensource
+
+Thread:
+
+1. The tricky part isn't seeing files, it's knowing when they're finished. FSEvents tells you something changed; Ordino then measures the file until its size and date stop moving for a second. Partial downloads (.crdownload, .download, .part) are ignored.
+2. Real numbers from my Mac: new file reported 1.2 s after it was written, renames and deletes in 0.2 s, 0.00 s of CPU over a minute of idle. FSEvents only wakes the app when something happens.
+3. Sandboxed from the start: Ordino only sees the folder you pick, remembered with a security-scoped bookmark. System folders and ~/Library can't be chosen at all. Next: the first rule that actually moves a file.
+
+**X (Spanish)**
+
+> Ordino ya vigila una carpeta. La eliges una vez y no vuelve a pedir permiso. Un archivo aparece ~1 s tras dejar de cambiar; uno de 400 MB escrito en 6 s se avisó una vez, al acabar. CPU en reposo: 0%.
+>
+> https://github.com/dbf244/Ordino
+>
+> #buildinpublic #macOS #SwiftUI #opensource
+
+Hilo:
+
+1. Lo difícil no es ver los archivos, es saber cuándo han terminado. FSEvents avisa de que algo cambió; Ordino mide el archivo hasta que su tamaño y fecha dejan de moverse durante un segundo. Las descargas a medias (.crdownload, .download, .part) se ignoran.
+2. Números reales en mi Mac: archivo nuevo avisado 1,2 s después de escribirse, renombrados y borrados en 0,2 s, 0,00 s de CPU en un minuto en reposo. FSEvents solo despierta la app cuando pasa algo.
+3. Con sandbox desde el principio: Ordino solo ve la carpeta que eliges, recordada con un security-scoped bookmark. Las carpetas del sistema y ~/Library no se pueden elegir. Lo siguiente: la primera regla que mueve un archivo de verdad.
