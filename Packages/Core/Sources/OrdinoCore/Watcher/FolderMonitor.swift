@@ -66,13 +66,13 @@ public actor FolderMonitor {
         known = Set(directChildren().map(\.path))
 
         let interpreter = EventInterpreter(rootPath: rootPath)
-        tasks.append(Task { [weak self] in
+        tasks.append(Task(priority: .utility) { [weak self] in
             for await batch in batches {
                 let changes = interpreter.interpret(batch) { FileManager.default.fileExists(atPath: $0) }
                 await self?.handle(changes)
             }
         })
-        tasks.append(Task { [weak self] in
+        tasks.append(Task(priority: .utility) { [weak self] in
             for await url in checker.readyFiles {
                 await self?.ready(url)
             }
@@ -109,6 +109,8 @@ public actor FolderMonitor {
                     emit(.fileRenamed(from: from, to: to))
                 }
                 await checker.submit(to)
+            case .contentChanged(let url):
+                await checker.touch(url)
             case .rootChanged:
                 if !FileManager.default.fileExists(atPath: rootPath) {
                     emit(.folderUnavailable(folder))

@@ -3,6 +3,7 @@ import Foundation
 /// What a file or folder looks like right now. If two signatures taken a
 /// while apart are equal, nothing was written in between.
 struct FileSignature: Sendable, Equatable {
+    let isDirectory: Bool
     let size: Int64
     let modified: Date
     /// For folders: how many items are inside, at any depth.
@@ -17,7 +18,7 @@ struct FileSignature: Sendable, Equatable {
         let modified = attributes[.modificationDate] as? Date ?? .distantPast
         guard attributes[.type] as? FileAttributeType == .typeDirectory else {
             let size = (attributes[.size] as? NSNumber)?.int64Value ?? 0
-            return FileSignature(size: size, modified: modified, itemCount: 0)
+            return FileSignature(isDirectory: false, size: size, modified: modified, itemCount: 0)
         }
 
         var size: Int64 = 0
@@ -34,6 +35,6 @@ struct FileSignature: Sendable, Equatable {
                 }
             }
         }
-        return FileSignature(size: size, modified: latest, itemCount: count)
+        return FileSignature(isDirectory: true, size: size, modified: latest, itemCount: count)
     }
 }

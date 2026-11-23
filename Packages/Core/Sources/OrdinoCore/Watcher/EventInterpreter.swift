@@ -8,6 +8,9 @@ public enum WatchChange: Sendable, Equatable {
     case removed(URL)
     /// An item renamed inside the folder.
     case renamed(from: URL, to: URL)
+    /// Something changed deep inside this item (a subfolder of the watched
+    /// folder): if it is still settling, it is still being filled.
+    case contentChanged(URL)
     /// The watched folder itself was moved, renamed or deleted.
     case rootChanged
     /// FSEvents dropped events; the folder must be scanned again.
@@ -19,8 +22,10 @@ public enum WatchChange: Sendable, Equatable {
 /// FSEvents coalesces flags, so a single record can say "created" and
 /// "removed" at once. The interpreter trusts the file system's current state
 /// (`exists`) over the flags, and pairs renames by file ID.
-/// Only direct children of the watched folder count: rules act on what
-/// lands in a folder, not on what happens deep inside its subfolders.
+/// Only direct children of the watched folder are candidates: rules act on
+/// what lands in a folder, not on what happens deep inside its subfolders.
+/// Activity deep inside a subfolder is only reported, once per batch, as a
+/// sign that the subfolder is still changing.
 struct EventInterpreter: Sendable {
     let rootPath: String
 
@@ -59,11 +64,14 @@ struct EventInterpreter: Sendable {
             case (false, true):
                 pairedRenames[old] = .candidate(url(new))
             case (false, false):
-                break
+                // Both outside, or deep inside a subfolder: handled below like any other event.
+                continue
             }
             handled.insert(old)
             handled.insert(new)
         }
+        var deepChildren: [String] = []
+        var seenDeep = Set<String>()
 
         for record in ordered {
             let path = record.path
@@ -73,10 +81,33 @@ struct EventInterpreter: Sendable {
             }
             guard !handled.contains(path) else { continue }
             handled.insert(path)
-            guard isDirectChild(path), !isIgnored(path) else { continue }
+            guard isDirectChild(path) else {
+                // Storms of events inside one subfolder are common (a checkout, a
+                // build): look at each subfolder once per batch, not once per event.
+                if let child = directChild(containing: path), seenDeep.insert(child).inserted, !isIgnored(child) {
+                    deepChildren.append(child)
+                }
+                continue
+            }
+            guard !isIgnored(path) else { continue }
             changes.append(exists(path) ? .candidate(url(path)) : .removed(url(path)))
         }
+
+        // A child that already has a change in this batch needs no extra signal.
+        let changed = Set(changes.flatMap(\.paths))
+        for child in deepChildren where !changed.contains(child) {
+            changes.append(.contentChanged(url(child)))
+        }
         return changes
+    }
+
+    /// The direct child of the root that contains `path`, when `path` is deeper than that.
+    private func directChild(containing path: String) -> String? {
+        let prefix = rootPath == "/" ? "/" : rootPath + "/"
+        guard path.hasPrefix(prefix) else { return nil }
+        let rest = path.dropFirst(prefix.count)
+        guard let slash = rest.firstIndex(of: "/") else { return nil }
+        return prefix + rest[..<slash]
     }
 
     private func uniquePaths(_ records: [FSEventRecord]) -> [String] {
@@ -97,5 +128,16 @@ struct EventInterpreter: Sendable {
 
     private func url(_ path: String) -> URL {
         URL(fileURLWithPath: path)
+    }
+}
+
+private extension WatchChange {
+    /// The paths this change is about.
+    var paths: [String] {
+        switch self {
+        case .candidate(let url), .removed(let url), .contentChanged(let url): [url.path]
+        case .renamed(let from, let to): [from.path, to.path]
+        case .rootChanged, .rescan: []
+        }
     }
 }

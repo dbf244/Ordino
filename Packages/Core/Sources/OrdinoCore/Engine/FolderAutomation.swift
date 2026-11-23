@@ -35,7 +35,7 @@ public actor FolderAutomation {
         let activity = try await monitor.start()
         let (stream, continuation) = AsyncStream.makeStream(of: FolderActivity.self)
         self.continuation = continuation
-        task = Task { [weak self] in
+        task = Task(priority: .utility) { [weak self] in
             for await item in activity {
                 await self?.handle(item)
             }

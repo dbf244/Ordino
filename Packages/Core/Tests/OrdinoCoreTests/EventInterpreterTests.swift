@@ -90,13 +90,51 @@ struct EventInterpreterTests {
         #expect(changes.isEmpty)
     }
 
-    @Test("Files inside subfolders are ignored; the subfolder itself counts")
+    @Test("Files inside subfolders are never candidates; the subfolder itself counts")
     func onlyDirectChildren() {
         let changes = interpret([
             record("Sub/inner.txt", [.itemCreated, .itemIsFile]),
             record("Sub", [.itemCreated, .itemIsDir]),
         ], existing: ["\(root)/Sub", "\(root)/Sub/inner.txt"])
         #expect(changes == [.candidate(url("Sub"))])
+    }
+
+    @Test("Events deep inside a subfolder say once that the subfolder is still changing")
+    func deepEventsMarkTheSubfolder() {
+        let changes = interpret([
+            record("Album/a.jpg", [.itemCreated, .itemIsFile], id: 1),
+            record("Album/b.jpg", [.itemCreated, .itemIsFile], id: 2),
+            record("Album/2026/c.jpg", [.itemModified, .itemIsFile], id: 3),
+            record("Other/x/y/z.o", [.itemRemoved, .itemIsFile], id: 4),
+        ], existing: ["\(root)/Album", "\(root)/Other"])
+        #expect(changes == [.contentChanged(url("Album")), .contentChanged(url("Other"))])
+    }
+
+    @Test("A rename deep inside a subfolder marks the subfolder")
+    func deepRename() {
+        let changes = interpret([
+            record("Album/old.jpg", [.itemRenamed, .itemIsFile], fileID: 9, id: 1),
+            record("Album/new.jpg", [.itemRenamed, .itemIsFile], fileID: 9, id: 2),
+        ], existing: ["\(root)/Album", "\(root)/Album/new.jpg"])
+        #expect(changes == [.contentChanged(url("Album"))])
+    }
+
+    @Test("Events inside hidden folders or partial downloads say nothing")
+    func deepEventsInIgnoredItems() {
+        let changes = interpret([
+            record(".git/objects/ab/cd", [.itemCreated, .itemIsFile], id: 1),
+            record("Movie.download/data", [.itemModified, .itemIsFile], id: 2),
+        ], existing: ["\(root)/.git", "\(root)/Movie.download"])
+        #expect(changes.isEmpty)
+    }
+
+    @Test("Events outside the watched folder say nothing")
+    func eventsOutsideRoot() {
+        let changes = interpret([
+            FSEventRecord(path: "\(root)-sibling/Album/a.jpg", flags: [.itemCreated, .itemIsFile], fileID: nil, eventID: 1),
+            FSEventRecord(path: "/elsewhere/a/b.txt", flags: [.itemCreated, .itemIsFile], fileID: nil, eventID: 2),
+        ], existing: [])
+        #expect(changes.isEmpty)
     }
 
     @Test("Events on the watched folder itself are not candidates")

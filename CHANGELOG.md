@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- A folder still being copied into a watched folder is no longer walked
+  every 250 ms to see whether it has finished. FSEvents activity inside it
+  keeps it waiting, and it is walked only when it goes quiet: settling a
+  5,000-file folder now costs about 0.2 s of CPU instead of 0.8 s, and the
+  cost no longer grows with how long the copy takes.
+- Background bookkeeping runs at utility priority and its timers allow some
+  tolerance, so macOS can schedule it on efficiency cores and coalesce
+  wake-ups.
+
 ## [0.3.0] - 2026-11-23
 
 Achievement 3: All Conditions.
