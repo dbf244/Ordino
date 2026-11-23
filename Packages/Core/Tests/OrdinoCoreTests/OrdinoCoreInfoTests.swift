@@ -5,7 +5,7 @@ import Testing
 struct OrdinoCoreInfoTests {
     @Test("Version is the current release")
     func versionIsCurrentRelease() {
-        #expect(OrdinoCoreInfo.version == "0.2.0")
+        #expect(OrdinoCoreInfo.version == "0.3.0")
     }
 
     @Test("Version is plain semantic versioning (MAJOR.MINOR.PATCH)")
