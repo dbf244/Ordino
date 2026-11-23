@@ -44,9 +44,17 @@ public struct ExtensionCondition: Codable, Sendable, Equatable {
 }
 
 /// One test a file must pass.
-public enum Condition: Sendable, Equatable {
+public indirect enum Condition: Sendable, Equatable {
     case name(NameCondition)
     case fileExtension(ExtensionCondition)
+    case kind(KindCondition)
+    case size(SizeCondition)
+    case date(DateCondition)
+    case tags(TagCondition)
+    case downloadSource(DownloadSourceCondition)
+    case screenshot(ScreenshotCondition)
+    /// A nested group, for "this AND (that OR the other)".
+    case group(ConditionGroup)
 }
 
 /// Conditions combined with ALL or ANY.
@@ -73,6 +81,13 @@ extension Condition: Codable {
     private enum Kind: String, Codable {
         case name
         case `extension`
+        case kind
+        case size
+        case date
+        case tags
+        case downloadSource
+        case screenshot
+        case group
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -86,6 +101,20 @@ extension Condition: Codable {
             self = .name(try NameCondition(from: decoder))
         case .extension:
             self = .fileExtension(try ExtensionCondition(from: decoder))
+        case .kind:
+            self = .kind(try KindCondition(from: decoder))
+        case .size:
+            self = .size(try SizeCondition(from: decoder))
+        case .date:
+            self = .date(try DateCondition(from: decoder))
+        case .tags:
+            self = .tags(try TagCondition(from: decoder))
+        case .downloadSource:
+            self = .downloadSource(try DownloadSourceCondition(from: decoder))
+        case .screenshot:
+            self = .screenshot(try ScreenshotCondition(from: decoder))
+        case .group:
+            self = .group(try ConditionGroup(from: decoder))
         }
     }
 
@@ -98,6 +127,27 @@ extension Condition: Codable {
         case .fileExtension(let condition):
             try container.encode(Kind.extension, forKey: .type)
             try condition.encode(to: encoder)
+        case .kind(let condition):
+            try container.encode(Kind.kind, forKey: .type)
+            try condition.encode(to: encoder)
+        case .size(let condition):
+            try container.encode(Kind.size, forKey: .type)
+            try condition.encode(to: encoder)
+        case .date(let condition):
+            try container.encode(Kind.date, forKey: .type)
+            try condition.encode(to: encoder)
+        case .tags(let condition):
+            try container.encode(Kind.tags, forKey: .type)
+            try condition.encode(to: encoder)
+        case .downloadSource(let condition):
+            try container.encode(Kind.downloadSource, forKey: .type)
+            try condition.encode(to: encoder)
+        case .screenshot(let condition):
+            try container.encode(Kind.screenshot, forKey: .type)
+            try condition.encode(to: encoder)
+        case .group(let group):
+            try container.encode(Kind.group, forKey: .type)
+            try group.encode(to: encoder)
         }
     }
 }

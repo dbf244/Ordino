@@ -55,6 +55,32 @@ struct ModelCodingTests {
         #expect(try JSONDecoder().decode(Condition.self, from: JSONEncoder().encode(condition)) == condition)
     }
 
+    @Test("Every kind of condition round-trips", arguments: [
+        Condition.kind(KindCondition(operator: .isNot, kind: .installer)),
+        .size(SizeCondition(operator: .greaterThan, amount: 1.5, unit: .gigabytes)),
+        .date(DateCondition(attribute: .lastOpened, operator: .moreThan, amount: 3, unit: .months)),
+        .tags(TagCondition(operator: .hasTag, tag: "Red")),
+        .downloadSource(DownloadSourceCondition(operator: .isFrom, domain: "apple.com")),
+        .screenshot(ScreenshotCondition(isScreenshot: true)),
+        .group(ConditionGroup(match: .any, conditions: [
+            .name(NameCondition(operator: .contains, value: "invoice")),
+            .group(ConditionGroup(match: .all, conditions: [.screenshot(ScreenshotCondition(isScreenshot: false))])),
+        ])),
+    ])
+    func conditionRoundTrip(condition: Condition) throws {
+        #expect(try JSONDecoder().decode(Condition.self, from: JSONEncoder().encode(condition)) == condition)
+    }
+
+    @Test("A nested group encodes to the documented JSON")
+    func nestedGroupJSON() throws {
+        let condition = Condition.group(ConditionGroup(match: .any, conditions: [
+            .size(SizeCondition(operator: .greaterThan, amount: 500, unit: .megabytes)),
+            .date(DateCondition(attribute: .added, operator: .moreThan, amount: 2, unit: .weeks)),
+        ]))
+        let expected = #"{"conditions":[{"amount":500,"operator":"greaterThan","type":"size","unit":"megabytes"},{"amount":2,"attribute":"added","operator":"moreThan","type":"date","unit":"weeks"}],"match":"any","type":"group"}"#
+        #expect(try encode(condition) == expected)
+    }
+
     @Test("Unknown condition types are rejected, not silently ignored")
     func unknownCondition() {
         let json = Data(#"{"type":"colour","value":"red"}"#.utf8)
