@@ -10,4 +10,8 @@ public enum FolderActivity: Sendable, Equatable, Hashable {
     case fileRenamed(from: URL, to: URL)
     /// The watched folder itself was moved, renamed or deleted.
     case folderUnavailable(URL)
+    /// A rule moved an item. `from` and `to` are enough to put it back.
+    case fileMoved(from: URL, to: URL, rule: String)
+    /// A rule's action could not run; the item was left where it was.
+    case actionFailed(URL, rule: String, reason: ActionFailure)
 }

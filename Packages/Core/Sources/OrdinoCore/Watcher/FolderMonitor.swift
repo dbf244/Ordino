@@ -121,6 +121,17 @@ public actor FolderMonitor {
         }
     }
 
+    /// Stops reporting `url` if it disappears: Ordino is about to move it and
+    /// reports the move itself.
+    public func stopTracking(_ url: URL) {
+        known.remove(url.path)
+    }
+
+    /// Reports `url` again if it disappears later.
+    public func track(_ url: URL) {
+        known.insert(url.path)
+    }
+
     private func ready(_ url: URL) {
         known.insert(url.path)
         emit(.fileReady(url))
