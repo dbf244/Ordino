@@ -4,7 +4,7 @@ Ordino is built one achievement at a time. Each one leaves the app in a working
 state that can be shown publicly. An achievement is done only when **every**
 acceptance criterion passes AND the maintainer confirms the manual checks.
 
-Status: **Current achievement → 2**
+Status: **Current achievement → 3**
 
 ---
 
@@ -35,7 +35,7 @@ until a file stops changing; ignores `.crdownload`, `.download`, `.part`).
 - [x] Automated tests for the watcher and stability checker using temp folders.
 - [x] Idle CPU usage is ~0%.
 
-## 🧠 Achievement 2 — The First Rule (v0.2.0)
+## 🧠 Achievement 2 — The First Rule (v0.2.0) ✅
 A real rule moves a real file.
 
 **Deliverables:** `Rule`, `Condition`, `Action`, `WatchedFolder` models
@@ -43,9 +43,9 @@ A real rule moves a real file.
 (destination folder also picked by the user, stored as a bookmark);
 one test rule defined in code.
 
-- [ ] Dropping `test.pdf` into the folder moves it to the destination.
-- [ ] If the destination already has that name, the file becomes `test 2.pdf`; nothing is overwritten.
-- [ ] Evaluator tests cover every name and extension case.
+- [x] Dropping `test.pdf` into the folder moves it to the destination.
+- [x] If the destination already has that name, the file becomes `test 2.pdf`; nothing is overwritten.
+- [x] Evaluator tests cover every name and extension case.
 
 ## 🔍 Achievement 3 — All Conditions (v0.3.0)
 The engine understands everything v1.0 needs.

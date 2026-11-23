@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-23
+
+Achievement 2: The First Rule.
+
+### Added
+- `Rule`, `Condition`, `RuleAction` and `WatchedFolder` models with a stable,
+  documented JSON format. Unknown condition or action types are rejected.
+- `Evaluator` with name conditions (is, is not, contains, does not contain,
+  starts with, ends with, matches pattern) and extension conditions (is,
+  is not, is one of). Case-insensitive by default and Unicode-aware. Empty
+  values, empty groups and invalid patterns never match.
+- Move action: name conflicts become `test 2.pdf`, `test 3.pdf`… using an
+  exclusive rename, so nothing is ever overwritten. Moves to another volume
+  copy, verify, then send the original to the Trash.
+- A test rule defined in code (PDFs → a destination folder the user picks,
+  saved as a bookmark), and moves shown in the Activity Log with where each
+  file went.
+- Watched folders and their rules are saved; v0.1.0 installs are migrated.
+
 ## [0.1.0] - 2026-11-23
 
 Achievement 1: The Watcher.
@@ -39,6 +58,7 @@ Achievement 0: Foundations.
 - GitHub Actions CI that builds the app and runs all tests on macOS, failing on any warning or a missing sandbox.
 - README, MIT license, contributing guide, code of conduct and this changelog.
 
-[Unreleased]: https://github.com/dbf244/Ordino/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/dbf244/Ordino/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/dbf244/Ordino/releases/tag/v0.2.0
 [0.1.0]: https://github.com/dbf244/Ordino/releases/tag/v0.1.0
 [0.0.1]: https://github.com/dbf244/Ordino/releases/tag/v0.0.1
