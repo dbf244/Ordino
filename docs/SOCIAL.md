@@ -132,3 +132,37 @@ Hilo:
 1. El Evaluator es puro: mismos datos del archivo, mismas reglas. 107 tests cubren cada caso de nombre y extensión, también acentos (macOS guarda "é" como e + tilde y ambas formas deben coincidir). Una condición vacía o a medias nunca coincide.
 2. Pequeñas decisiones de seguridad: un número que pusiste en el nombre nunca cambia (Capítulo 2.pdf pasa a Capítulo 2 2.pdf), y al mover a otro disco se copia, se comprueba la copia y el original va a la Papelera en vez de borrarse.
 3. Lo siguiente: todas las condiciones de la v1.0 (tipo, tamaño, fechas, etiquetas, origen de descarga, capturas) y grupos TODAS/ALGUNA anidados.
+
+### Achievement 3 — All Conditions (v0.3.0)
+
+Suggested media: a code screenshot of a nested rule (PDF AND (invoice OR
+factura)) next to the test run output showing 138 passing tests and the
+10,000-file timing. There is no new UI in this achievement, so no recording.
+
+**X (English)**
+
+> Ordino's engine now knows every v1.0 condition: kind, size, dates, Finder tags, download source and screenshots. Groups nest, like "PDF AND (invoice OR factura)". 10,000 files evaluated in 0.1 s.
+>
+> https://github.com/dbf244/Ordino
+>
+> #buildinpublic #macOS #SwiftUI #opensource
+
+Thread:
+
+1. Download source and screenshot flags live in the file's own attributes (kMDItemWhereFroms, kMDItemIsScreenCapture), the same ones Spotlight indexes. Reading them directly works in the sandbox and doesn't wait for Spotlight to catch up.
+2. One rule I care about: if Ordino doesn't know something about a file (it was never opened, so no "last opened" date), that condition never matches, not even "is not". Missing data should never trigger an action.
+3. Every condition is tested against real files with real tags and metadata: 138 tests in the engine. Next: all the actions (copy, rename with patterns, tag, Trash, compress…).
+
+**X (Spanish)**
+
+> El motor de Ordino ya entiende todas las condiciones de la v1.0: tipo, tamaño, fechas, etiquetas, origen de descarga y capturas. Los grupos se anidan: "PDF Y (invoice O factura)". 10.000 archivos en 0,1 s.
+>
+> https://github.com/dbf244/Ordino
+>
+> #buildinpublic #macOS #SwiftUI #opensource
+
+Hilo:
+
+1. El origen de descarga y la marca de captura viven en atributos del propio archivo (kMDItemWhereFroms, kMDItemIsScreenCapture), los mismos que indexa Spotlight. Leerlos directamente funciona en el sandbox y no espera a Spotlight.
+2. Una regla que me importa: si Ordino no sabe algo de un archivo (nunca se abrió, así que no hay "última apertura"), esa condición nunca coincide, ni siquiera "no es". Un dato que falta nunca debe provocar una acción.
+3. Cada condición se prueba con archivos reales, con etiquetas y metadatos reales: 138 tests en el motor. Lo siguiente: todas las acciones (copiar, renombrar con patrones, etiquetar, Papelera, comprimir…).
