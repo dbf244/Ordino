@@ -22,7 +22,8 @@ and there's more power when you go looking for it.
 ## Status
 
 Ordino is being built in public, one achievement at a time.
-**Right now it is an empty menu bar app: it does not organize anything yet.**
+**Right now Ordino watches one folder you choose and logs what arrives,
+changes, is renamed or removed there. It does not move or change any file yet.**
 See [docs/ACHIEVEMENTS.md](docs/ACHIEVEMENTS.md) for the roadmap and progress.
 
 ## Principles

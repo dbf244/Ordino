@@ -4,7 +4,7 @@ Ordino is built one achievement at a time. Each one leaves the app in a working
 state that can be shown publicly. An achievement is done only when **every**
 acceptance criterion passes AND the maintainer confirms the manual checks.
 
-Status: **Current achievement → 1**
+Status: **Current achievement → 2**
 
 ---
 
@@ -22,18 +22,18 @@ GitHub Actions CI (build + tests on macOS).
 - [x] `swift test` in Core passes (one sample test).
 - [x] CI is green on GitHub.
 
-## 👀 Achievement 1 — The Watcher (v0.1.0)
+## 👀 Achievement 1 — The Watcher (v0.1.0) ✅
 The app sees what happens in a folder the user picked.
 
 **Deliverables:** `FolderAccess` (NSOpenPanel + security-scoped bookmarks,
 saved and restored), `FolderWatcher` on FSEvents, `StabilityChecker` (waits
 until a file stops changing; ignores `.crdownload`, `.download`, `.part`).
 
-- [ ] Pick ~/Ordino-Playground once; after relaunching the app, access still works without asking again.
-- [ ] Adding, renaming or deleting a file there shows up in the log in under 2 seconds.
-- [ ] A large file being copied is reported once, only when it's finished.
-- [ ] Automated tests for the watcher and stability checker using temp folders.
-- [ ] Idle CPU usage is ~0%.
+- [x] Pick ~/Ordino-Playground once; after relaunching the app, access still works without asking again.
+- [x] Adding, renaming or deleting a file there shows up in the log in under 2 seconds.
+- [x] A large file being copied is reported once, only when it's finished.
+- [x] Automated tests for the watcher and stability checker using temp folders.
+- [x] Idle CPU usage is ~0%.
 
 ## 🧠 Achievement 2 — The First Rule (v0.2.0)
 A real rule moves a real file.

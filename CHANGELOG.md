@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-23
+
+Achievement 1: The Watcher.
+
+### Added
+- Choose a folder to watch from the menu bar. Access is saved as a
+  security-scoped bookmark and restored on every launch without asking again;
+  a moved folder is found again, and a folder that can't be reached is kept
+  and the menu asks to choose it again.
+- `FolderWatcher` on FSEvents, reporting new, changed, renamed and removed
+  items directly inside the watched folder.
+- `StabilityChecker`: an item is only reported once it has stopped changing,
+  so files still being copied or downloaded are reported once, when finished.
+  Partial downloads (`.crdownload`, `.download`, `.part`) and hidden files are ignored.
+- Activity Log window (⌘L) listing what happened, newest first.
+- Protected locations (`/`, system folders, `~/Library`) can never be chosen.
+- Entitlements for user-selected folders and app-scoped bookmarks
+  (see docs/ENTITLEMENTS.md).
+
 ## [0.0.1] - 2026-11-21
 
 Achievement 0: Foundations.
@@ -20,5 +39,6 @@ Achievement 0: Foundations.
 - GitHub Actions CI that builds the app and runs all tests on macOS, failing on any warning or a missing sandbox.
 - README, MIT license, contributing guide, code of conduct and this changelog.
 
-[Unreleased]: https://github.com/dbf244/Ordino/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/dbf244/Ordino/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/dbf244/Ordino/releases/tag/v0.1.0
 [0.0.1]: https://github.com/dbf244/Ordino/releases/tag/v0.0.1
