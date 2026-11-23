@@ -32,3 +32,6 @@ Package.resolved.orig
 
 # Local Claude Code settings
 .claude/settings.local.json
+
+# Local instructions for Claude Code (kept out of the public repo)
+CLAUDE.md
