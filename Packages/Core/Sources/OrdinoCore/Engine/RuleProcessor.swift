@@ -22,7 +22,9 @@ public struct RuleProcessor: Sendable {
 
     /// Returns what happened: one `.fileMoved` per move, or a final `.actionFailed`.
     public func process(_ url: URL, rules: [Rule]) async -> [FolderActivity] {
-        guard let facts = FileFacts.read(url) else { return [] }
+        // Only read what the rules look at: a folder's total size, for example,
+        // is never computed unless a rule has a size condition.
+        guard let facts = FileFacts.read(url, needing: Evaluator.requiredFacts(for: rules)) else { return [] }
         var current = url
         var activity: [FolderActivity] = []
         for rule in Evaluator.matchingRules(for: facts, in: rules) {
