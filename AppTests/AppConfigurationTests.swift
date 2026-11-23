@@ -24,11 +24,24 @@ struct AppConfigurationTests {
         #expect(isAgent == true)
     }
 
-    @Test("App runs inside the App Sandbox")
-    func isSandboxed() throws {
+    @Test("App runs inside the App Sandbox with only user-chosen folder access", arguments: [
+        "com.apple.security.app-sandbox",
+        "com.apple.security.files.user-selected.read-write",
+        "com.apple.security.files.bookmarks.app-scope",
+    ])
+    func hasEntitlement(_ name: String) throws {
         let task = try #require(SecTaskCreateFromSelf(nil))
-        let value = SecTaskCopyValueForEntitlement(task, "com.apple.security.app-sandbox" as CFString, nil)
+        let value = SecTaskCopyValueForEntitlement(task, name as CFString, nil)
         #expect(value as? Bool == true)
+    }
+
+    @Test("App has no network access", arguments: [
+        "com.apple.security.network.client",
+        "com.apple.security.network.server",
+    ])
+    func hasNoNetwork(_ name: String) throws {
+        let task = try #require(SecTaskCreateFromSelf(nil))
+        #expect(SecTaskCopyValueForEntitlement(task, name as CFString, nil) == nil)
     }
 
     @Test("Menu bar icon is in the asset catalog")

@@ -8,6 +8,8 @@ this table too.
 | Entitlement | Value | Since | Why |
 | --- | --- | --- | --- |
 | `com.apple.security.app-sandbox` | `true` | v0.0.1 | Required for the Mac App Store. The app only reaches files the user explicitly gives it. |
+| `com.apple.security.files.user-selected.read-write` | `true` | v0.1.0 | Lets Ordino read and organize the folder the user picks in the Open panel. Without it, a chosen folder is not accessible. Read-write because later achievements move, rename and tag files there. |
+| `com.apple.security.files.bookmarks.app-scope` | `true` | v0.1.0 | Lets Ordino save a security-scoped bookmark to each chosen folder, so access survives relaunches without asking again. |
 
 ## Deliberately not requested
 
@@ -17,14 +19,17 @@ this table too.
   allowed. Folder access always comes from the user choosing a folder.
 - **Camera, microphone, contacts, location, calendars**: not needed.
 
-## Planned
+## How folder access works
 
-Each one is added only in the achievement that needs it, with its row above:
-
-- `com.apple.security.files.user-selected.read-write` and
-  `com.apple.security.files.bookmarks.app-scope` (Achievement 1): let the user
-  pick folders with `NSOpenPanel` and keep access across launches with
-  security-scoped bookmarks.
+1. The user picks a folder in `NSOpenPanel` (`FolderPicker`). This is the only
+   way Ordino gets access to anything outside its container.
+2. `FolderAccess` (in OrdinoCore) refuses protected locations (`/`, system
+   folders, `~/Library`), creates a security-scoped bookmark and saves it in
+   `Application Support/Ordino/folders.json` inside the app's container.
+3. On the next launch the bookmark is resolved and
+   `startAccessingSecurityScopedResource()` is called. A stale bookmark (folder
+   moved or renamed) is refreshed. If access fails, the folder is kept and the
+   menu asks the user to choose it again; nothing is silently dropped.
 
 ## Added by Xcode, not by us
 

@@ -4,5 +4,5 @@ public enum OrdinoCoreInfo {
     ///
     /// The app's `MARKETING_VERSION` in `project.yml` must match this value;
     /// an app test enforces it.
-    public static let version = "0.0.1"
+    public static let version = "0.1.0"
 }
