@@ -58,13 +58,14 @@ private struct ActivityRow: View {
         case .fileReady: "doc.badge.plus"
         case .fileRemoved: "minus.circle"
         case .fileRenamed: "pencil"
-        case .folderUnavailable: "exclamationmark.triangle"
+        case .fileMoved: "arrow.right.doc.on.clipboard"
+        case .folderUnavailable, .actionFailed: "exclamationmark.triangle"
         }
     }
 
     private var tint: Color {
         switch entry.activity {
-        case .folderUnavailable: .orange
+        case .folderUnavailable, .actionFailed: .orange
         default: .accentColor
         }
     }
@@ -73,8 +74,10 @@ private struct ActivityRow: View {
         switch entry.activity {
         case .fileReady(let url), .fileRemoved(let url), .folderUnavailable(let url):
             url.lastPathComponent
-        case .fileRenamed(_, let to):
+        case .fileRenamed(_, let to), .fileMoved(_, let to, _):
             to.lastPathComponent
+        case .actionFailed(let url, _, _):
+            url.lastPathComponent
         }
     }
 
@@ -88,6 +91,26 @@ private struct ActivityRow: View {
             String(localized: "Renamed from “\(from.lastPathComponent)”")
         case .folderUnavailable:
             String(localized: "Watched folder was moved or deleted")
+        case .fileMoved(_, let to, let rule):
+            String(localized: "Moved to “\(to.deletingLastPathComponent().lastPathComponent)” by “\(rule)”")
+        case .actionFailed(_, let rule, let reason):
+            String(localized: "“\(rule)” couldn't run: \(Self.describe(reason))")
+        }
+    }
+
+    private static func describe(_ failure: ActionFailure) -> String {
+        switch failure {
+        case .destinationUnavailable:
+            String(localized: "the destination folder isn't available")
+        case .moveFailed(let error):
+            switch error {
+            case .sourceMissing: String(localized: "the file is gone")
+            case .destinationMissing: String(localized: "the destination folder is missing")
+            case .alreadyInDestination: String(localized: "it's already in the destination")
+            case .destinationInsideSource: String(localized: "a folder can't go inside itself")
+            case .noFreeName: String(localized: "no free name in the destination")
+            case .moveFailed(let message): message
+            }
         }
     }
 }

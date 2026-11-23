@@ -26,6 +26,13 @@ enum FolderPicker {
         )
     }
 
+    static func explainSameFolder() {
+        showAlert(
+            title: String(localized: "Choose a different folder"),
+            message: String(localized: "The destination can't be the folder Ordino is watching. Choose another folder, for example one inside it.")
+        )
+    }
+
     static func explainFailure(_ url: URL) {
         showAlert(
             title: String(localized: "Ordino couldn't get access to “\(url.lastPathComponent)”"),

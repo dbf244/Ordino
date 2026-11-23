@@ -45,6 +45,18 @@ private struct MenuContent: View {
             Task { await model.chooseFolder() }
         }
 
+        if case .watching = model.folderState {
+            Divider()
+            if let destination = model.testRuleDestination {
+                Text("Test rule: PDFs → “\(URL(fileURLWithPath: destination.displayPath).lastPathComponent)”")
+            } else {
+                Text("Test rule: choose where PDFs go")
+            }
+            Button(model.testRuleDestination == nil ? "Choose Destination for PDFs…" : "Change Destination for PDFs…") {
+                Task { await model.chooseTestRuleDestination() }
+            }
+        }
+
         Button("Show Activity Log") {
             showLog()
         }
